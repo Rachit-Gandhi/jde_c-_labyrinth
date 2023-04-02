@@ -4,37 +4,40 @@
 #include <climits>
 using namespace std;
 
-#define r 5
-#define c 7
+int rows = 5;
+int cols = 7;
+int arr[rows][cols];
+int visit[rows][cols];
 
 int max1=-1;
 int wasMax = 1;
-int final[r][c];
+int final[rows][cols];
 
 int lastWrite = INT_MAX;     
 
-bool safe(int x, int y){
-   if (x < r && y < c && x >= 0 && y >= 0)
+
+bool safe(int x, int y, int rows, int cols){
+   if (x < rows && y < cols && x >= 0 && y >= 0)
 		return true;
   return false;
 }
 
-bool valid(int arr[r][c], int v[r][c], int x, int y){
+bool valid(int arr[][cols], int v[][cols], int x, int y, int rows, int cols){
 
     if(arr[x][y]=='#' || v[x][y])
          return false;
     return true;
 }
 
-int path(int arr[r][c],int v[r][c],int i, int j,int count){
+int path(int arr[][cols],int v[][cols],int i, int j,int count, int rows, int cols){
 
    
     if( max1 < count ){                          // For limiting the recursion and finding largest path                       
     max1 = count;
     wasMax = 1;
     lastWrite = INT_MAX;
-    for(int k=0;k<r;k++){
-        for(int l=0;l<c;l++){
+    for(int k=0;k<rows;k++){
+        for(int l=0;l<cols;l++){
                 final[k][l] = 0;              
         } 
     }
@@ -88,19 +91,19 @@ int arr[r][c];                      // Input Array
 int visit[r][c];                    // Visited Array
 
 memset(visit,0,sizeof visit);
-for(int i=0;i<r;i++){
-	    for(int j=0;j<c;j++){
-	        char ch;
-	        cin>>ch;
-	        arr[i][j] = ch;
-	    }
+for(int i=0;i<rows;i++){
+    for(int j=0;j<cols;j++){
+        char ch;
+        cin>>ch;
+        arr[i][j] = ch;
+    }
 }
-     
-for(int i=0;i<r;i++){
-    for(int j=0;j<c;j++){
+
+for(int i=0;i<rows;i++){
+    for(int j=0;j<cols;j++){
 
         if(arr[i][j]=='.'){
-            path(arr,visit,i,j,1);
+            path(arr,visit,i,j,1,rows,cols);
                 visit[i][j] = 0;
         }        
     }     
@@ -108,8 +111,8 @@ for(int i=0;i<r;i++){
 }
 
         
-for(int i=0;i<r;i++){
-    for(int j=0;j<c;j++){
+for(int i=0;i<rows;i++){
+    for(int j=0;j<cols;j++){
         if(final[i][j]==0 && arr[i][j]=='#')
             cout<<"#"<<" ";
         else if(final[i][j]==0 && arr[i][j=='.'])
@@ -117,18 +120,16 @@ for(int i=0;i<r;i++){
         else
             cout<<final[i][j]-1<<" ";
     }
+    cout<<max1<<"\n";
     cout<<"\n";
-}
 
 }
 
+}
 
 
-// ##.##.#
-// #..##.#
-// #.#####
-// #..####
-// #######
+
+
 
 // ##.##.#
 // ##.#..#
