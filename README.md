@@ -1,2 +1,2 @@
-# jde_c-_labyrinth
+# jde_cpp_labyrinth
 Solving Labyrinth problem in C++
